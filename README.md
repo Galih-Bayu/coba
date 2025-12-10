@@ -20,7 +20,7 @@
 
 ## 💻 Tutorial Penggunaan (Berdasarkan User Flow)
 
-Berikut adalah panduan langkah demi langkah penggunaan aplikasi LeadSight, mulai dari login hingga pengelolaan data nasabah, sesuai dengan alur sistem.
+Berikut adalah panduan langkah demi langkah penggunaan aplikasi LeadSight sesuai dengan alur sistem yang telah dirancang.
 
 ### 1. Kredensial Login (Mode Demo)
 Gunakan akun berikut untuk masuk ke dalam sistem:
@@ -35,36 +35,36 @@ Gunakan akun berikut untuk masuk ke dalam sistem:
 #### A. Memulai & Login
 1.  Buka aplikasi. Halaman pertama yang muncul adalah **Login**.
 2.  Masukkan Username dan Password (gunakan kredensial demo di atas).
-3.  Klik tombol Login.
-    * *(Opsional: Jika lupa password, klik "Forgot Password" untuk alur pemulihan).*
-4.  Setelah berhasil login, Anda akan diarahkan ke menu utama.
+3.  Klik tombol Login (atau "Forgot Password" jika lupa).
+4.  Setelah sukses, Anda akan masuk ke navigasi utama.
 
-#### B. Menu Utama (Memilih Navigasi)
-Setelah login, Anda dapat memilih tiga menu utama:
+#### B. Menu Utama & Navigasi
+Terdapat 3 jalur utama yang bisa dipilih user:
 
-**Jalur 1: Dashboard (Melihat Analitik)**
-1.  Pilih menu **Dashboard**.
-2.  Di sini Anda dapat **Melihat** berbagai visualisasi makro:
-    * **Tren Chart:** Melihat performa kampanye dari waktu ke waktu.
-    * **Customer Chart:** Melihat distribusi demografi nasabah secara umum.
-    * **Campaign Chart:** Melihat statistik keberhasilan kampanye.
-3.  Dari widget Customer Table di dashboard, Anda bisa mengklik nasabah tertentu untuk melihat **Customer Demografi** detailnya dan mendapatkan **AI Insight** spesifik untuk nasabah tersebut.
+**Jalur 1: Dashboard (Analitik)**
+* **Aksi:** Klik menu "Dashboard".
+* **Fitur:** Anda hanya dapat **Melihat** visualisasi data.
+* **Konten:**
+    * **Tren Chart:** Grafik performa dari waktu ke waktu (animasi by shadcn).
+    * **Customer Chart:** Distribusi demografi nasabah.
+    * **Campaign Chart:** Statistik keberhasilan kampanye.
+    * **Customer Table (Preview):** Klik salah satu baris untuk melihat detail demografi & AI Insight.
 
-**Jalur 2: Promotion (Fokus Sales & Follow-up)**
-1.  Pilih menu **Promotion**. Ini adalah area kerja utama untuk sales.
-2.  Anda akan melihat **Customer Table** yang berisi daftar leads lengkap dengan Skor Prioritas.
-3.  Klik pada salah satu nama nasabah. Halaman akan berpindah ke detail **Customer Demografi**.
-4.  Di halaman detail, Anda akan melihat **AI Insight** (rekomendasi tindakan).
-5.  Di bagian ini, Anda dapat mengelola catatan interaksi (Notes):
-    * **Add Notes:** Menambahkan hasil panggilan baru (misal: "Nasabah tertarik, hubungi besok").
-    * **Edit Notes:** Mengubah catatan yang sudah ada.
-    * **Remove Notes:** Menghapus catatan yang tidak relevan.
+**Jalur 2: Promotion (Sales Operation)**
+* **Aksi:** Klik menu "Promotion".
+* **Fitur:**
+    1.  **Customer Table:** Melihat daftar nasabah lengkap dengan Label Prioritas.
+    2.  **Detail Nasabah:** Klik nama nasabah -> Masuk ke halaman Customer Demografi.
+    3.  **AI Insight:** Lihat rekomendasi spesifik dari AI.
+    4.  **Manajemen Notes:**
+        * *Add Notes:* Tambah catatan baru.
+        * *Edit Notes:* Ubah catatan.
+        * *Remove Notes:* Hapus catatan.
 
-**Jalur 3: Customer Entry (Input Data Baru)**
-(Biasanya hanya untuk role Admin/Data Entry)
-1.  Pilih menu **Customer Entry**.
-2.  Isi formulir data diri nasabah baru.
-3.  Klik **Save New Customer**. Data akan tersimpan ke database dan akan diproses oleh AI untuk mendapatkan skor di kemudian hari.
+**Jalur 3: Customer Entry (Input Data)**
+* **Aksi:** Klik menu "Customer Entry".
+* **Fitur:** Form input data nasabah baru.
+* **Output:** Klik "Save New Customer" untuk menyimpan ke database.
 
 ---
 
@@ -72,15 +72,14 @@ Setelah login, Anda dapat memilih tiga menu utama:
 
 LeadSight menggunakan arsitektur modern yang memisahkan tanggung jawab antara antarmuka, logika bisnis, data, dan kecerdasan buatan.
 
-### Diagram Alur Data & Logika Prioritas
+### Diagram Logika Prioritas (PENTING)
 
-1.  **Frontend** mengirim data nasabah ke **Backend**.
-2.  **Backend** meneruskan data ke **ML Engine**.
-3.  **ML Engine** menganalisis dan mengembalikan **Skor Probabilitas Mentah** (misal: 0.75, 0.30).
-4.  ⭐ **Logika Prioritas di Database:** Backend menyimpan skor tersebut ke Database. Database kemudian menentukan **Label Prioritas** berdasarkan aturan berikut:
-    * Jika Skor Probabilitas > 50% (0.50) → Label: **Priority**
-    * Jika Skor Probabilitas ≤ 50% (0.50) → Label: **Non-Priority**
-5.  Data yang sudah berlabel dikirim kembali ke Frontend untuk ditampilkan.
+Sistem menggunakan alur hibrida antara ML dan Database untuk menentukan prioritas nasabah:
+
+1.  **Analisis ML:** Data nasabah dikirim ke Machine Learning. ML hanya mengembalikan **Skor Probabilitas** (angka desimal 0.0 - 1.0).
+2.  **Logika Database:** Backend menyimpan skor tersebut. Penentuan label dilakukan oleh Database/Backend dengan logika:
+    * `IF (Probability_Score > 0.50)` ➔ Set Label: **PRIORITY** 🔴
+    * `IF (Probability_Score <= 0.50)` ➔ Set Label: **NON-PRIORITY** ⚪
 
 ---
 
@@ -89,27 +88,127 @@ LeadSight menggunakan arsitektur modern yang memisahkan tanggung jawab antara an
 Bagian antarmuka pengguna yang interaktif, responsif, dan kaya animasi.
 
 ### Tech Stack Frontend
-* **Bundler:** Vite (React)
+* **Bundler:** Vite (React Ecosystem)
 * **Styling:** TailwindCSS
-* **UI Components & Charts:** shadcn/ui (Menggunakan Recharts di dalamnya untuk grafik)
-* **Animations:** Framer Motion (Untuk animasi button, navbar, dan transisi halaman)
-* **State Management:** React Context API & Custom Hooks
-* **Data Fetching:** Axios
+* **UI Components:** shadcn/ui (Radix UI based)
+* **Charting:** Recharts (via shadcn charts) dengan animasi transisi.
+* **Micro-Interactions:** Framer Motion (Digunakan untuk animasi Button hover, transisi Navbar, dan kemunculan elemen halaman).
+* **Network:** Axios
 
-### Struktur Folder
+### Struktur Folder (Source Code)
+Struktur direktori disusun rapi untuk skalabilitas:
+
 ```bash
 src/
-├── api/                    # API client & endpoints (Axios instances)
+├── api/                    # Konfigurasi Axios & Endpoints terpusat
 │   └── api.js
 ├── components/
-│   ├── ui/                 # Reusable UI components (Button, Input, Card dari shadcn)
-│   ├── dashboard/          # Dashboard widgets & charts components
-│   ├── common/             # Shared components (Table, Searchbar, Pagination, LoadingSpinner)
-│   └── layout/             # Layout utama, Navbar, Sidebar (dengan Framer Motion)
-├── contexts/               # React Context providers (AuthContext, ThemeContext)
-├── hooks/                  # Custom hooks (useCustomers, useStats, useAuth)
-├── pages/                  # Page components (Login, Dashboard, Promotion, CustomerEntry)
-├── lib/                    # Utils dan helper functions (cn untuk tailwind merge)
-├── styles/                 # Global CSS dan Tailwind directives
-├── App.jsx                 # Main routing setup
-└── main.jsx                # Entry point
+│   ├── ui/                 # Komponen Reusable (Button, Card, Input - shadcn)
+│   ├── dashboard/          # Widget khusus dashboard & chart components
+│   ├── common/             # Komponen umum (Table, Searchbar, Pagination)
+│   └── layout/             # Struktur utama (Navbar, Sidebar dengan animasi)
+├── contexts/               # React Context Providers (Auth, Theme)
+├── hooks/                  # Custom Hooks (useCustomers, useStats, useAuth)
+├── pages/                  # Halaman Utama (Login, Dashboard, Promotion)
+├── lib/                    # Utilities (cn utils, formatters)
+├── styles/                 # Global CSS & Tailwind config
+├── App.jsx                 # Routing Utama
+└── main.jsx                # Entry Point
+```
+
+---
+
+## ⚙️ LeadSight — Backend
+
+Server API yang tangguh, aman, dan modular.
+
+### 1. Tech Stack Backend
+* **Runtime:** Node.js
+* **Framework:** Express.js
+* **Validation:** Joi (Validasi input request)
+* **Auth:** JWT (JSON Web Token - Access & Refresh Token mechanism)
+
+### 2. Database (Supabase & RPC)
+LeadSight menggunakan **PostgreSQL** (via Supabase).
+* **RPC (Remote Procedure Calls):** Fungsi analitik berat (seperti menghitung tren harian atau agregasi prioritas) dijalankan langsung di database melalui RPC function, bukan di loop Node.js, untuk performa maksimal.
+* **Tabel Utama:** `users`, `authentications`, `customers`, `notes`, `economic_indicators`.
+
+### 3. Environment Variables
+Konfigurasi wajib untuk file `.env` (Backend):
+
+```env
+NODE_ENV=production
+FRONTEND_URL=http://localhost:5173
+# Auth Keys
+ACCESS_TOKEN_KEY=your_secret_access_key
+REFRESH_TOKEN_KEY=your_secret_refresh_key
+ACCESS_TOKEN_AGE=3600s
+REFRESH_TOKEN_AGE=7d
+# Database & AI
+SUPABASE_URL=[https://your-project.supabase.co](https://your-project.supabase.co)
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+GEMINI_API_KEY=your_google_ai_key
+```
+
+---
+
+## 🧠 LeadSight — Machine Learning
+
+Otak di balik sistem rekomendasi LeadSight.
+
+### 1. Ringkasan Model
+* **Algoritma:** **LightGBM Classifier** (Gradient Boosting).
+* **Dataset:** Bank Marketing Dataset (41.188 data).
+* **Teknik:** SMOTE (Synthetic Minority Over-sampling) untuk mengatasi data imbalance.
+
+### 2. Output Model
+Model ini **tidak** mengeluarkan output berupa teks "Priority". Model hanya mengeluarkan angka probabilitas (misal: `0.78`). Konversi angka ini menjadi label bisnis dilakukan di layer aplikasi/database sesuai ambang batas (threshold) yang ditentukan bisnis (saat ini > 50%).
+
+### 3. Metrik Performa
+| Metrik | Nilai |
+| :--- | :--- |
+| **Accuracy** | **88.72%** |
+| **Precision (Yes)**| **54.89%** |
+| **Recall (No)** | **95.04%** |
+
+---
+
+## 🛠 Instalasi & Setup Lokal
+
+Ikuti langkah ini untuk menjalankan LeadSight di komputer Anda secara lokal.
+
+### Prasyarat
+* Node.js (v16+)
+* NPM / Yarn
+* Git
+
+### 1. Clone Repository
+```bash
+git clone [https://github.com/username-anda/leadsight-project.git](https://github.com/username-anda/leadsight-project.git)
+cd leadsight-project
+```
+
+### 2. Setup Backend
+```bash
+cd backend
+npm install
+# Buat file .env sesuai spesifikasi di atas
+npm run start
+# Server berjalan di http://localhost:5000
+```
+
+### 3. Setup Frontend
+Buka terminal baru:
+```bash
+cd frontend
+npm install
+npm run dev
+# Aplikasi berjalan di http://localhost:5173
+```
+
+---
+
+**LeadSight Project**
+*Dikembangkan sebagai bagian dari program Asah Digital led by Dicoding in association with Accenture.*
+
+Copyright © 2024 LeadSight Team.
