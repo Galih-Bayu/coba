@@ -207,6 +207,41 @@ npm run dev
 
 ---
 
+## 🧪 Lampiran: Hasil Blackbox Testing
+
+Berikut adalah dokumentasi hasil pengujian fungsional (Blackbox Testing) yang dilakukan untuk memastikan semua fitur berjalan sesuai harapan sebelum rilis (Production).
+
+### 1. Ringkasan Statistik Pengujian
+
+| Keterangan | Jumlah / Hasil | Status |
+| :--- | :--- | :--- |
+| **Total Skenario Pengujian** | 16 Skenario | - |
+| **Skenario Berhasil** | 16 | ✅ |
+| **Skenario Gagal** | 0 | ❌ |
+| **Persentase Kegagalan** | 0% | - |
+| **Persentase Keberhasilan** | **100%** | **PASSED** |
+
+Rincian pengujian per modul dan fitur:
+
+| No | Modul | Skenario Pengujian | Harapan | Hasil |
+|:--:|:---|:---|:---|:---:|
+| 1 | **Login** | Memasukkan email & password valid | Menampilkan dashboard utama | ✅ |
+| 2 | **Login** | Memasukkan password salah | Muncul pesan error “Invalid credentials” | ✅ |
+| 3 | **Dashboard** | Berhasil login | Semua grafik, card statistik, dan daftar nasabah tampil | ✅ |
+| 4 | **Customer List** | Membuka halaman nasabah list | Tabel nasabah muncul dengan filtering dan sorting | ✅ |
+| 5 | **Search** | Mengetik nama pada search bar | Tabel menampilkan hasil pencarian yang sesuai | ✅ |
+| 6 | **Filter** | Memilih filter (contoh: prioritas “High”) | Tabel menampilkan data terpilih | ✅ |
+| 7 | **Detail** | Klik salah satu nasabah | Muncul detail nasabah lengkap, AI insight, catatan promosi | ✅ |
+| 8 | **Input Form** | Mengisi semua field form tambah nasabah | Nasabah baru berhasil disimpan dan tampil di daftar | ✅ |
+| 9 | **Validation** | Mengosongkan field wajib pada form | Muncul pesan kesalahan “Field wajib diisi” | ✅ |
+| 10 | **Prediction** | Submit form prediksi nasabah baru | Muncul probability score, priority label, dan rekomendasi | ✅ |
+| 11 | **Notes** | Menulis catatan promosi baru | Catatan tersimpan dan muncul di riwayat promosi nasabah | ✅ |
+| 12 | **Edit Notes** | Mengubah catatan yang sudah dibuat | Catatan ter-update dengan nilai baru | ✅ |
+| 13 | **Campaign** | Membuka halaman campaign | Grafik campaign effectiveness tampil seluruhnya | ✅ |
+| 14 | **Logout** | Menekan tombol logout | Sistem kembali ke halaman login | ✅ |
+| 15 | **Responsive** | Membuka website di layar kecil (mobile) | Tampilan tetap rapi dan menu dapat diakses | ✅ |
+| 16 | **Error Handling** | Simulasi server down / gagal fetch | Sistem menampilkan pesan error “Failed to load data” | ✅ |
+
 **LeadSight Project**
 *Dikembangkan sebagai bagian dari program Asah Digital led by Dicoding in association with Accenture.*
 
