@@ -27,8 +27,7 @@ Gunakan akun berikut untuk masuk ke dalam sistem:
 
 | Role | Username | Password | Fitur yang Dapat Diakses |
 | :--- | :--- | :--- | :--- |
-| **Admin** | `admin.leadsight` | `leadsight123` | Akses Penuh: Dashboard Statistik, Insight AI, Semua Data Nasabah, Input Data Baru. |
-| **Sales** | `sales.user` | `leadsight123` | Akses Terbatas: Fokus pada menu Promotion (Daftar Leads) dan pengelolaan Notes. |
+| **Demo User** | `user1@gmail.com` | `user1` | Akses ke Dashboard Statistik, Menu Promotion (Leads), Notes, dan Customer Entry. |
 
 ### 2. Alur Penggunaan Aplikasi
 
